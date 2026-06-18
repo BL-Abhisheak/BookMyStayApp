@@ -1,43 +1,70 @@
 package com.bookmystay.bookmystayapp;
 
+import com.bookmystay.bookmystayapp.model.Reservation;
 import com.bookmystay.bookmystayapp.service.BookingQueueService;
 import com.bookmystay.bookmystayapp.service.InventoryService;
-import com.bookmystay.bookmystayapp.service.SearchService;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.bookmystay.bookmystayapp.service.ReservationConfirmationService;
+
 
 public class BookmystayappApplication {
 
 	public static void main(String[] args) {
 
-		BookingQueueService bookingService =
-				new BookingQueueService();
+		InventoryService inventoryService =
+				new InventoryService();
 
-		bookingService.addBookingRequest(
-				"Abhisheak",
-				"Single");
+		inventoryService.addRoomType(
+				"Master",
+				6,
+				7500,
+				"WiFi, TV");
 
-		bookingService.addBookingRequest(
-				"Peter",
-				"Double");
+		inventoryService.addRoomType(
+				"Double",
+				1,
+				4500,
+				"WiFi, TV, Breakfast");
 
-		bookingService.addBookingRequest(
-				"Venom",
-				"Suite");
+		ReservationConfirmationService
+				confirmationService =
+				new ReservationConfirmationService(
+						inventoryService.getRoomInventory());
 
-		bookingService.displayWaitingRequests();
+		Reservation reservation1 =
+				new Reservation(
+						"Abhisheak",
+						"Single");
 
-		System.out.println(
-				"\nPending Requests : "
-						+ bookingService.getPendingRequestCount());
+		Reservation reservation2 =
+				new Reservation(
+						"Peter",
+						"Single");
 
-		System.out.println(
-				"\nProcessing Requests...");
+		Reservation reservation3 =
+				new Reservation(
+						"Venom",
+						"Single");
 
-		bookingService.processNextRequest();
-		bookingService.processNextRequest();
+		confirmationService
+				.confirmReservation(
+						reservation1);
 
-		bookingService.displayWaitingRequests();
+		confirmationService
+				.confirmReservation(
+						reservation2);
+
+		confirmationService
+				.confirmReservation(
+						reservation3);
+
+		confirmationService
+				.displayAllocatedRooms();
+
+		confirmationService
+				.displayBookedRoomIds();
+
+		inventoryService
+				.displayInventory();
 	}
 }
 
