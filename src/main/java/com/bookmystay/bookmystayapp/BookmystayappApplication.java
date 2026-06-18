@@ -1,6 +1,8 @@
 package com.bookmystay.bookmystayapp;
 
 import com.bookmystay.bookmystayapp.model.Reservation;
+import com.bookmystay.bookmystayapp.model.Service;
+import com.bookmystay.bookmystayapp.service.AddOnServiceManager;
 import com.bookmystay.bookmystayapp.service.BookingQueueService;
 import com.bookmystay.bookmystayapp.service.InventoryService;
 import com.bookmystay.bookmystayapp.service.ReservationConfirmationService;
@@ -10,61 +12,34 @@ public class BookmystayappApplication {
 
 	public static void main(String[] args) {
 
-		InventoryService inventoryService =
-				new InventoryService();
+		AddOnServiceManager serviceManager =
+				new AddOnServiceManager();
 
-		inventoryService.addRoomType(
-				"Master",
-				6,
-				7500,
-				"WiFi, TV");
+		String reservationId = "S1";
 
-		inventoryService.addRoomType(
-				"Double",
-				1,
-				4500,
-				"WiFi, TV, Breakfast");
+		serviceManager.addService(
+				reservationId,
+				new Service(
+						"Morning Food",
+						500));
 
-		ReservationConfirmationService
-				confirmationService =
-				new ReservationConfirmationService(
-						inventoryService.getRoomInventory());
+		serviceManager.addService(
+				reservationId,
+				new Service(
+						"Gaming",
+						1500));
 
-		Reservation reservation1 =
-				new Reservation(
-						"Abhisheak",
-						"Single");
+		serviceManager.addService(
+				reservationId,
+				new Service(
+						"Night Stay",
+						800));
 
-		Reservation reservation2 =
-				new Reservation(
-						"Peter",
-						"Single");
+		serviceManager.displayServices(
+				reservationId);
 
-		Reservation reservation3 =
-				new Reservation(
-						"Venom",
-						"Single");
-
-		confirmationService
-				.confirmReservation(
-						reservation1);
-
-		confirmationService
-				.confirmReservation(
-						reservation2);
-
-		confirmationService
-				.confirmReservation(
-						reservation3);
-
-		confirmationService
-				.displayAllocatedRooms();
-
-		confirmationService
-				.displayBookedRoomIds();
-
-		inventoryService
-				.displayInventory();
+		serviceManager.displayTotalServiceCost(
+				reservationId);
 	}
 }
 
