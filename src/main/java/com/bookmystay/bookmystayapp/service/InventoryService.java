@@ -1,7 +1,5 @@
 package com.bookmystay.bookmystayapp.service;
 
-
-
 import com.bookmystay.bookmystayapp.model.Room;
 
 import java.util.HashMap;

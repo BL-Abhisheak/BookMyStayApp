@@ -1,10 +1,8 @@
 package com.bookmystay.bookmystayapp.service;
 
-
 import com.bookmystay.bookmystayapp.model.Room;
 
 import java.util.Map;
-
 public class SearchService {
 
     private final Map<String, Room> roomInventory;

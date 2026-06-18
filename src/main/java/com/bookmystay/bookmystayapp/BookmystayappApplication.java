@@ -1,5 +1,6 @@
 package com.bookmystay.bookmystayapp;
 
+import com.bookmystay.bookmystayapp.service.BookingQueueService;
 import com.bookmystay.bookmystayapp.service.InventoryService;
 import com.bookmystay.bookmystayapp.service.SearchService;
 import org.springframework.boot.SpringApplication;
@@ -9,38 +10,34 @@ public class BookmystayappApplication {
 
 	public static void main(String[] args) {
 
-		InventoryService inventoryService =
-				new InventoryService();
+		BookingQueueService bookingService =
+				new BookingQueueService();
 
-		inventoryService.addRoomType(
-				"Single",
-				20,
-				2500,
-				"WiFi, TV");
+		bookingService.addBookingRequest(
+				"Abhisheak",
+				"Single");
 
-		inventoryService.addRoomType(
-				"Double",
-				15,
-				4500,
-				"WiFi, TV, Breakfast");
+		bookingService.addBookingRequest(
+				"Peter",
+				"Double");
 
-		inventoryService.addRoomType(
-				"Suite",
-				0,
-				9000,
-				"WiFi, TV, Spa Access");
+		bookingService.addBookingRequest(
+				"Venom",
+				"Suite");
 
-		SearchService searchService =
-				new SearchService(
-						inventoryService.getRoomInventory());
-
-		searchService.displayAvailableRooms();
-
-		searchService.searchRoom("Double");
+		bookingService.displayWaitingRequests();
 
 		System.out.println(
-				"\nIs Suite Available ? "
-						+ searchService.isRoomAvailable("Suite"));
+				"\nPending Requests : "
+						+ bookingService.getPendingRequestCount());
+
+		System.out.println(
+				"\nProcessing Requests...");
+
+		bookingService.processNextRequest();
+		bookingService.processNextRequest();
+
+		bookingService.displayWaitingRequests();
 	}
 }
 
