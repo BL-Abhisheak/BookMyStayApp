@@ -2,44 +2,48 @@ package com.bookmystay.bookmystayapp;
 
 import com.bookmystay.bookmystayapp.model.Reservation;
 import com.bookmystay.bookmystayapp.model.Service;
-import com.bookmystay.bookmystayapp.service.AddOnServiceManager;
-import com.bookmystay.bookmystayapp.service.BookingQueueService;
-import com.bookmystay.bookmystayapp.service.InventoryService;
-import com.bookmystay.bookmystayapp.service.ReservationConfirmationService;
+import com.bookmystay.bookmystayapp.service.*;
 
 
 public class BookmystayappApplication {
 
 	public static void main(String[] args) {
 
-		AddOnServiceManager serviceManager =
-				new AddOnServiceManager();
+		BookingHistoryService historyService =
+				new BookingHistoryService();
 
-		String reservationId = "S1";
+		Reservation reservation1 =
+				new Reservation(
+						"Abhisheak",
+						"Mega");
 
-		serviceManager.addService(
-				reservationId,
-				new Service(
-						"Morning Food",
-						500));
+		Reservation reservation2 =
+				new Reservation(
+						"Peter",
+						"Double");
 
-		serviceManager.addService(
-				reservationId,
-				new Service(
-						"Gaming",
-						1500));
+		Reservation reservation3 =
+				new Reservation(
+						"Venom",
+						"Duplex");
 
-		serviceManager.addService(
-				reservationId,
-				new Service(
-						"Night Stay",
-						800));
+		historyService.addReservation(
+				reservation1);
 
-		serviceManager.displayServices(
-				reservationId);
+		historyService.addReservation(
+				reservation2);
 
-		serviceManager.displayTotalServiceCost(
-				reservationId);
+		historyService.addReservation(
+				reservation3);
+
+		historyService.displayBookingHistory();
+
+		historyService.cancelReservation(
+				"Venom");
+
+		historyService.displayBookingHistory();
+
+		historyService.generateReport();
 	}
 }
 
