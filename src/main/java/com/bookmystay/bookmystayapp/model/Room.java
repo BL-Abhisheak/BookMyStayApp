@@ -6,7 +6,7 @@ public class Room {
     private int availableCount;
     private double pricePerNight;
 
-    public Room(String roomType, int availableCount, double pricePerNight) {
+    public Room(String roomType, int availableCount, double pricePerNight, String amenities) {
         this.roomType = roomType;
         this.availableCount = availableCount;
         this.pricePerNight = pricePerNight;

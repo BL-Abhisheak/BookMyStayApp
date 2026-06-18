@@ -1,10 +1,10 @@
 package com.bookmystay.bookmystayapp;
 
 import com.bookmystay.bookmystayapp.service.InventoryService;
+import com.bookmystay.bookmystayapp.service.SearchService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
 public class BookmystayappApplication {
 
 	public static void main(String[] args) {
@@ -15,33 +15,32 @@ public class BookmystayappApplication {
 		inventoryService.addRoomType(
 				"Single",
 				20,
-				2500);
+				2500,
+				"WiFi, TV");
 
 		inventoryService.addRoomType(
 				"Double",
 				15,
-				4000);
+				4500,
+				"WiFi, TV, Breakfast");
 
 		inventoryService.addRoomType(
 				"Suite",
-				5,
-				8000);
+				0,
+				9000,
+				"WiFi, TV, Spa Access");
 
-		inventoryService.displayInventory();
+		SearchService searchService =
+				new SearchService(
+						inventoryService.getRoomInventory());
 
-		inventoryService.updateRoomCount(
-				"Single",
-				18);
+		searchService.displayAvailableRooms();
 
-		inventoryService.updateRoomPrice(
-				"Suite",
-				9000);
+		searchService.searchRoom("Double");
 
 		System.out.println(
-				"\nAvailable Single Rooms: "
-						+ inventoryService.getAvailableRooms("Single"));
-
-		inventoryService.displayInventory();
+				"\nIs Suite Available ? "
+						+ searchService.isRoomAvailable("Suite"));
 	}
-
 }
+
